@@ -10,7 +10,7 @@ public class rotation extends JPanel implements ActionListener {
 	//Array containing images for each angle of go-kart
 	private ImageIcon imageArray[];
 	
-	private int delay = 50, totalImages = 16, currentImage = 0;
+	private int delay = 100, totalImages = 16, currentImage = 0;
 	
 		public rotation() {
 			imageArray = new ImageIcon[totalImages];
