@@ -1,9 +1,11 @@
 import java.awt.*;
+import java.awt.geom.Area;
+import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
 public class Game implements Runnable{
-
+	
 	private Track track;
 	public int width, height;
 	public String title;
@@ -14,13 +16,15 @@ public class Game implements Runnable{
 	private BufferStrategy bs;
 	private Graphics g;
 	
-	private Player player1;
-	private Game game;
+	//States
+	private State gameState;
+	private State menuState;
 	
-	//temp
-	//private BufferedImage testImage;
-	private SpriteSheet sheet;
+	//Input
 	private KeyManager keyManager;
+	
+	//Handler
+	private Handler handler;
 	
 	public Game(String title, int width, int height) {
 		this.width = width;
@@ -32,17 +36,21 @@ public class Game implements Runnable{
 	private void init() {
 		track = new Track(title, width, height);
 		track.getFrame().addKeyListener(keyManager);
-		game = new Game(title, width, height);
 		Assets.init(); //loads all images
 		
-		player1 = new Player(game, 100, 100);
-		//testImage = KartLoader.loadImage("/player1gokart/spritesheet.png");
-		//sheet = new SpriteSheet(testImage);
+		handler = new Handler(this);
+		
+		//Initialises State of game
+		gameState = new GameState(handler); //Because already in game class just pass 'this'
+		menuState = new MenuState(handler);
+		State.setState(gameState);
+
 	}
 	
-		private void tick() {
+	private void tick() {
 		keyManager.tick();
-		player1.tick();
+		if(State.getState() != null)
+			State.getState().tick();
 	}
 		
 	private void render() {
@@ -53,37 +61,51 @@ public class Game implements Runnable{
 		}
 		
 		g = bs.getDrawGraphics();
+		Graphics2D g2d = (Graphics2D) g.create();
 		
-//		// Clear to hide flashing track update
-//		g.clearRect(0, 0, width, height);
-//		
-//		g.fillRect(0, 0, width, height); // Track
-//		
-//		Color c1 = Color.green;
-//		g.setColor( c1 );
-//		g.fillRect( 150, 200, 550, 300 ); //grass
-//		
-//		Color c2 = Color.black;
-//		g.setColor( c2 );
-//		g.drawRect(50, 100, 750, 500);  // outer edge
-//		g.drawRect(150, 200, 550, 300); // inner edge
-//		
-//		Color c3 = Color.yellow;
-//		g.setColor( c3 );
-//		g.drawRect( 100, 150, 650, 400 ); // mid-lane marker
-//		
-//		Color c4 = Color.white;
-//		g.setColor( c4 );
-//		g.drawLine( 700, 350, 800, 350 ); // start line
+		// Clear to hide flashing track update
+		g.clearRect(0, 0, width, height);
+		
+		g.fillRect(0, 0, width, height); // Track
+		
+		Color c1 = Color.green;
+		g.setColor( c1 );
+		g.fillRect( 150, 200, 550, 300 ); //grass
+		
+		Color c2 = Color.black;
+		g.setColor( c2 );
+		g.drawRect(50, 100, 750, 500);  // outer edge
+		g.drawRect(150, 200, 550, 300); // inner edge
+		
+		g2d.setColor(Color.yellow);
+        Stroke dashed = new BasicStroke(3, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0);
+		g2d.setStroke(dashed);
+	    g2d.draw(new RoundRectangle2D.Double(100, 150, 650, 400, 10, 10));
+		
+		Color c4 = Color.white;
+		g.setColor( c4 );
+		g.drawLine( 700, 350, 800, 350 ); // start line
+		
+		//Outer grass
+		Area outter = new Area(new Rectangle(0, 0, 850, 650 ));
+		Rectangle inner = new Rectangle(50, 100, 750, 500);
+		outter.subtract(new Area(inner));
+		g2d.setColor(Color.green);
+		g2d.fill(outter);
+		
+		//Calling order in java really matters!!! Must call player kart last
+		if(State.getState() != null)
+			State.getState().render(g);
 		
 		//g.drawImage(testImage, 20,20, null);
 		//g.drawImage(sheet.crop(0, 0, 50, 50),5,5,null);
 		//g.drawImage(Assets.player1,10,10, null);
 		
-		player1.render(g); //player1 kart
+		//player1.render(g); //player1 kart
 		
 		bs.show();
 		g.dispose();
+		g2d.dispose();
 		
 	}
 
