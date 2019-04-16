@@ -111,7 +111,12 @@ public class Game implements Runnable{
 
 
 	
+	public State getGameState() {
+		return gameState;
+	}
+
 	public void run() {
+		running = true;
 		
 		init();
 		
@@ -143,13 +148,13 @@ public class Game implements Runnable{
 		return keyManager;
 	}
 
-	public synchronized void start() {
-		if(running) // Prevents another thread starting
-			return;
-		running = true;
-		thread = new Thread(this);
-		thread.start();
-	}
+//	public synchronized void start() {
+//		if(running) // Prevents another thread starting
+//			return;
+//		running = true;
+//		thread = new Thread(this);
+//		thread.start();
+//	}
 	
 	public synchronized void stop() {
 		if(!running) // Prevents trying to stop thread that is already stopped
