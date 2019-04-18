@@ -21,6 +21,7 @@ public abstract class Entity {
 	
 	public abstract void render(Graphics g);
 	
+	// Players collide with each other
 //	public boolean checkEntityCollisions(float xOffset, float yOffset){
 //		for(Entity e : ){
 //			if(e.equals(this))

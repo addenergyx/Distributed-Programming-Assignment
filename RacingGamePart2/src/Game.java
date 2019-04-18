@@ -86,6 +86,9 @@ public class Game implements Runnable{
 		g.setColor( c4 );
 		g.drawLine( 700, 350, 800, 350 ); // start line
 		
+		g.setColor(Color.red);
+		g.fillRect(50, 350, 100, 10 ); // checkpoint
+		
 		//Outer grass
 		Area outter = new Area(new Rectangle(0, 0, 850, 650 ));
 		Rectangle inner = new Rectangle(50, 100, 750, 500);

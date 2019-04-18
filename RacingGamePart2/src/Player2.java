@@ -27,7 +27,9 @@ public class Player2 extends Players {
 	public void tick() {
 		//Movement
 		getInput();
-		move();
+		laps();
+		moveX();
+		moveY();
 	}
 	
 	//Update any variables for the object
@@ -53,8 +55,7 @@ public class Player2 extends Players {
 			
 		direction(currentImageIndex);
 		
-		
-		//delay to make rotation slower, car easier to control, although animation looks less smooth now
+		// delay to make rotation slower, car easier to control
 		try {
 			Thread.sleep(25); 
 		} catch (InterruptedException e) {
@@ -129,10 +130,6 @@ public class Player2 extends Players {
             xDelta = 0;
         } else if (xDelta > 9) {
             xDelta = 9;
-        }
-        
-        if (collision) {
-        	xDelta = 0f; //reset speed on collision
         }
         
     }

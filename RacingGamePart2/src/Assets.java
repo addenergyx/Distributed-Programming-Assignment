@@ -1,13 +1,11 @@
 import java.awt.image.BufferedImage;
 
-import javax.swing.ImageIcon;
-
 public class Assets {
 	
 	private static final int width = 50, height = 50, rows = 4, cols = 4;
 		
 	//Array containing images for each angle of go-kart
-	public static BufferedImage[] player1_move; //BufferImage more efficient then imageicon 
+	public static BufferedImage[] player1_move; //BufferImage more efficient than imageicon 
 	public static BufferedImage[] player2_move;
 	
 	public static void init() {

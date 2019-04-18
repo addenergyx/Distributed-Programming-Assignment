@@ -2,8 +2,8 @@ import java.awt.Graphics;
 
 public class GameState extends State {
 
-	private Player1 player1;
-	private Player2 player2;
+	//private Player1 player1;
+	//private Player2 player2;
 	private EntityManager entityManager;
 	
 	public GameState(Handler handler) {

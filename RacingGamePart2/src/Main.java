@@ -10,7 +10,7 @@ public class Main {
 		Game game = new Game("Race Track",850,650);
 		//game.start();
 		
-		AudioPlayer play = new AudioPlayer("Stadium");
+		MusicPlayer play = new MusicPlayer("Stadium");
 		pool.execute(play);
 		pool.execute(game);
 		

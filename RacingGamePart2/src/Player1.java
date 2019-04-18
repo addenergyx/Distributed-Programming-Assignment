@@ -29,7 +29,9 @@ public class Player1 extends Players {
 	public void tick() {
 		//Movement
 		getInput();
-		move();
+		laps();
+		moveX();
+		moveY();
 	}
 	
 	//Update any variables for the object
@@ -117,7 +119,7 @@ public class Player1 extends Players {
 //		boolean up = false, down = false, left = false, right = false;
 //		
 //		if(handler.getKeyManager().up) {
-//			g.drawImage(Assets.player_move[0], (int)x, (int)y, width, height, null);
+//			g.drawImage(Assets.player1_move[2], 50, 50, width, height, null);
 //			up = true;
 //		} else if (handler.getKeyManager().down) {
 //			g.drawImage(Assets.player_move[8], (int)x, (int)y, width, height, null);
@@ -142,12 +144,10 @@ public class Player1 extends Players {
 		
 		
 		g.drawImage(getCurrentAnimationFrame(), (int)x, (int)y, width, height, null); //player
-		
-		//g.drawImage(Assets.player1TopLeft, (int)(x + 50), (int)y, width, height, null);
-		
+				
 		//g.setColor(Color.red);
 		//g.fillRect(((int)(x + 5)), ((int)(y + 5)), bounds.width, bounds.height); // Hitbox
-		//g.fillRect(150, 200, 550, 300); 
+		//g.fillRect(50, 350, 100, 10 ); 
 		
 	}
 
@@ -177,9 +177,9 @@ public class Player1 extends Players {
             xDelta = 9;
         }
         
-        if (collision) {
-        	xDelta = 0f; //reset speed on collision
-        }
+//        if (collision) {
+//        	xDelta = 0f; //reset speed on collision
+//        }
         
     }
 	
