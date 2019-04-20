@@ -1,9 +1,9 @@
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
 public abstract class Players extends Entity {
 
-	public static final int DEFAULT_HEALTH = 10;
 	public static final float DEFAULT_SPEED = 0f; //stationary
 	public static final int DEFAULT_PLAYER_WIDTH = 50;
 	public static final int DEFAULT_PLAYER_HEIGHT = 50;
@@ -14,9 +14,9 @@ public abstract class Players extends Entity {
 	boolean collision, passCheckpoint;
     private HashMap<String, AudioPlayer> sfx;
 
-	public Players(Handler handler, float x, float y, int width, int height) {
+    public Players(Handler handler, float x, float y, int width, int height, BufferedImage[] car) {
+	//public Players(Handler handler, float x, float y, int width, int height) {
 		super(handler, x, y, width, height);
-		health = DEFAULT_HEALTH;
 		speed = DEFAULT_SPEED;
 		laps = 0;
 		collision = false;
@@ -56,7 +56,8 @@ public abstract class Players extends Entity {
 	}
 	
 	
-	// Comprehensive collision detection
+	// Comprehensive collision detection using a mix of ... and graphical collision
+	// Graphical alone didn't work when the kart collided if a boundary backwards
 	public void moveX() {
 		
 		Rectangle grass = new Rectangle(150, 200, 550, 300);

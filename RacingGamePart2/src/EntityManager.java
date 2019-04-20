@@ -5,18 +5,23 @@ public class EntityManager {
 
 	private Handler handler;
 	private Player1 player;
-	private Player2 player2;
+	private Player1 player2;
 	private ArrayList<Entity> entities;
 	
-	public EntityManager(Handler handler, Player1 player, Player2 player2) {
+	//public EntityManager(Handler handler, Player1 player, Player2 player2) {
+	public EntityManager(Handler handler, Player1 player, Player1 player2) {
 		this.handler = handler;
 		this.player = player;
 		this.player2 = player2;
 		
 		// Array of players
 		entities = new ArrayList<Entity>();
+		//Player1 player2 = new Player1(handler, 750, 400);
+		//Player1 player = new Player1(handler, 750, 400, Assets.player1_move, "wasd");
+		//Player1 player2 = new Player1(handler, 750, 400, Assets.player1_move, "wasd");
 		addEntity(player);
 		addEntity(player2);
+		//addEntity(player2);
 	}
 	
 	public void tick() {
@@ -52,13 +57,13 @@ public class EntityManager {
 		this.player = player;
 	}
 
-	public Player2 getPlayer2() {
-		return player2;
-	}
-
-	public void setPlayer2(Player2 player2) {
-		this.player2 = player2;
-	}
+//	public Player2 getPlayer2() {
+//		return player2;
+//	}
+//
+//	public void setPlayer2(Player2 player2) {
+//		this.player2 = player2;
+//	}
 
 	public ArrayList<Entity> getEntities() {
 		return entities;

@@ -16,8 +16,6 @@ public class Track {
 		
 		createDisplay();
 	}
-	
-	
 
 	private void createDisplay() {
 		

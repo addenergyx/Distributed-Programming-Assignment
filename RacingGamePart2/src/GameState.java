@@ -1,4 +1,5 @@
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
 
 public class GameState extends State {
 
@@ -9,7 +10,8 @@ public class GameState extends State {
 	public GameState(Handler handler) {
 		super(handler);
 		
-		entityManager = new EntityManager(handler, new Player1(handler, 700, 350), new Player2(handler, 750, 350) );
+		entityManager = new EntityManager(handler, new Player1(handler, 700, 350, Assets.player1_move, "wasd"  ), new Player1(handler, 750, 350, Assets.player2_move, "arrows") );
+		//entityManager = new EntityManager(handler, new Player1(handler, 700, 350, Assets.player2_move, "wasd"));
 		
 		//player1 = new Player1(handler, 700,350);
 		//player2 = new Player2(handler, 750, 350);
