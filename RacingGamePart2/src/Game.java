@@ -3,6 +3,7 @@ import java.awt.geom.Area;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public class Game implements Runnable{
 	
@@ -19,7 +20,7 @@ public class Game implements Runnable{
 	//States
 	private State gameState;
 	private State menuState;
-	
+		
 	//Input
 	private KeyManager keyManager;
 	
@@ -41,9 +42,11 @@ public class Game implements Runnable{
 		handler = new Handler(this);
 		
 		//Initialises State of game
-		gameState = new GameState(handler); //Because already in game class just pass 'this'
+		gameState = new GameState(handler); 
 		menuState = new MenuState(handler);
 		State.setState(gameState);
+		
+		
 
 	}
 	

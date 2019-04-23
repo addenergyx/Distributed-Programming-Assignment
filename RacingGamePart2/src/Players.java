@@ -34,7 +34,6 @@ public abstract class Players extends Entity {
 
 	public void laps(){
 		
-		
 		//Rectangle grass = new Rectangle(150, 200, 550, 300);
 		Rectangle hitbox = new Rectangle(((int)(x + 5)), ((int)(y + 5)), bounds.width, bounds.height); //player boundary
 		//Rectangle outside = new Rectangle(50, 100, 750, 500);
@@ -56,7 +55,7 @@ public abstract class Players extends Entity {
 	}
 	
 	
-	// Comprehensive collision detection using a mix of ... and graphical collision
+	// Comprehensive collision detection using a mix of mathematical and graphical collision
 	// Graphical alone didn't work when the kart collided if a boundary backwards
 	public void moveX() {
 		

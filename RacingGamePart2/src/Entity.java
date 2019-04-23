@@ -1,5 +1,6 @@
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.util.ArrayList;
 
 public abstract class Entity {
 	
@@ -21,21 +22,25 @@ public abstract class Entity {
 	
 	public abstract void render(Graphics g);
 	
-	// Players collide with each other
+//	// Players collide with each other
 //	public boolean checkEntityCollisions(float xOffset, float yOffset){
-//		for(Entity e : ){
-//			if(e.equals(this))
+//		ArrayList<Entity> aaa = handler.gameState.aaa;
+//		System.out.println("asdasdfad");
+//		for(Entity e : aaa ){
+//			
+//			if(e.equals(this)) // So doesn't check collision with itself
 //				continue;
 //			if(e.getCollisionBounds(0f, 0f).intersects(getCollisionBounds(xOffset, yOffset)))
+//				System.exit(0); //end game if players collide
 //				return true;
 //		}
 //		return false;
 //	}
-	
-	
-	public Rectangle getCollisionBounds(float xOffset, float yOffset) {
-		return new Rectangle((int) (x + bounds.x + xOffset), (int) (y + bounds.y + yOffset), bounds.width, bounds.height);
-	}
+//	
+//	
+//	public Rectangle getCollisionBounds(float xOffset, float yOffset) {
+//		return new Rectangle((int) (x + bounds.x + xOffset), (int) (y + bounds.y + yOffset), bounds.width, bounds.height);
+//	}
 	
 	public float getX() {
 		return x;

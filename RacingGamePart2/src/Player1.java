@@ -1,16 +1,11 @@
-import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Rectangle;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
-import java.util.HashMap;
 
 public class Player1 extends Players {
 	
 	public static BufferedImage currentImage;
 	private Animation rotation;
-	public static int currentImageIndex = 0, currentImageIndex2 =0;
+	public static int currentImageIndex = 0, currentImageIndex2 = 0;
 
 	// Temporary speed variable
     private float xDelta = 0;
@@ -39,6 +34,13 @@ public class Player1 extends Players {
 		laps();
 		moveX();
 		moveY();
+		
+//		if(checkEntityCollisions(xMove, 0f)) {
+//			moveX();
+//		}
+//		if(!checkEntityCollisions(0f, yMove)) {
+//			moveY();
+//		}
 	}
 	
 	//Update any variables for the object
@@ -124,14 +126,14 @@ public class Player1 extends Players {
 		
 		if (controls == "wasd") {
 			g.drawImage(rotation.getCurrentFrame(currentImageIndex), (int)x, (int)y, width, height, null); //player
-			g.setColor(Color.red);
-			g.fillRect(((int)(x + 5)), ((int)(y + 5)), bounds.width, bounds.height); // Hitbox
+			//g.setColor(Color.red);
+			//g.fillRect(((int)(x + 5)), ((int)(y + 5)), bounds.width, bounds.height); // Hitbox
 		}
 		
 		if (controls == "arrows") {
 			g.drawImage(rotation.getCurrentFrame(currentImageIndex2), (int)x, (int)y, width, height, null); //player
-			g.setColor(Color.red);
-			g.fillRect(((int)(x + 5)), ((int)(y + 5)), bounds.width, bounds.height); // Hitbox
+			//g.setColor(Color.red);
+			//g.fillRect(((int)(x + 5)), ((int)(y + 5)), bounds.width, bounds.height); // Hitbox
 		}
 		
 		//g.setColor(Color.red);

@@ -2,6 +2,7 @@
 public class Handler {
 
 	private Game game;
+	public GameState gameState; //maybe
 	
 	public Handler(Game game){
 		this.game = game;
@@ -17,5 +18,13 @@ public class Handler {
 
 	public void setGame(Game game) {
 		this.game = game;
+	}
+
+	public GameState getGameState() {
+		return gameState;
+	}
+
+	public void setGameState(GameState gameState) {
+		this.gameState = gameState;
 	}
 }

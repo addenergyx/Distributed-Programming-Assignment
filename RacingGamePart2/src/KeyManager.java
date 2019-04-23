@@ -12,9 +12,7 @@ public class KeyManager implements KeyListener {
 	}
 	
 	public void tick() {
-		
-		if(keys[KeyEvent.VK_W]) { ; }
-		
+				
 		up = keys[KeyEvent.VK_W];
 		down = keys[KeyEvent.VK_S];
 		left = keys[KeyEvent.VK_A];
