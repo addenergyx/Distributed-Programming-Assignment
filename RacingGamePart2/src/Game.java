@@ -37,16 +37,14 @@ public class Game implements Runnable{
 	private void init() {
 		track = new Track(title, width, height);
 		track.getFrame().addKeyListener(keyManager);
-		Assets.init(); //loads all images
+		Assets.init(); // Loads all images
 		
 		handler = new Handler(this);
 		
-		//Initialises State of game
+		// Initialises State of game
 		gameState = new GameState(handler); 
 		menuState = new MenuState(handler);
 		State.setState(gameState);
-		
-		
 
 	}
 	
@@ -59,7 +57,7 @@ public class Game implements Runnable{
 	private void render() {
 		bs = track.getCanvas().getBufferStrategy(); // Using buffers to draw to screen
 		if(bs == null) {
-			track.getCanvas().createBufferStrategy(3);
+			track.getCanvas().createBufferStrategy(3); // Triple buffer is standard design
 			return;
 		}
 		
@@ -73,12 +71,12 @@ public class Game implements Runnable{
 		
 		Color c1 = Color.green;
 		g.setColor( c1 );
-		g.fillRect( 150, 200, 550, 300 ); //grass
+		g.fillRect( 150, 200, 550, 300 ); //Grass
 		
 		Color c2 = Color.black;
 		g.setColor( c2 );
-		g.drawRect(50, 100, 750, 500);  // outer edge
-		g.drawRect(150, 200, 550, 300); // inner edge
+		g.drawRect(50, 100, 750, 500);  // Outer edge
+		g.drawRect(150, 200, 550, 300); // Inner edge
 		
 		g2d.setColor(Color.yellow);
         Stroke dashed = new BasicStroke(3, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0);
@@ -87,27 +85,20 @@ public class Game implements Runnable{
 		
 		Color c4 = Color.white;
 		g.setColor( c4 );
-		g.drawLine( 700, 350, 800, 350 ); // start line
+		g.drawLine( 700, 350, 800, 350 ); // Start line
 		
 		g.setColor(Color.red);
-		g.fillRect(50, 350, 101, 10 ); // checkpoint
+		g.fillRect(50, 350, 101, 10 ); // Checkpoint
 		
 		//Outer grass
-		Area outter = new Area(new Rectangle(0, 0, 850, 650 ));
+		Area outer = new Area(new Rectangle(0, 0, 850, 650 ));
 		Rectangle inner = new Rectangle(50, 100, 750, 500);
-		outter.subtract(new Area(inner));
+		outer.subtract(new Area(inner));
 		g2d.setColor(Color.green);
-		g2d.fill(outter);
+		g2d.fill(outer);
 		
-		//Calling order in java really matters!!! Must call player kart last
 		if(State.getState() != null)
 			State.getState().render(g);
-		
-		//g.drawImage(testImage, 20,20, null);
-		//g.drawImage(sheet.crop(0, 0, 50, 50),5,5,null);
-		//g.drawImage(Assets.player1,10,10, null);
-		
-		//player1.render(g); //player1 kart
 		
 		bs.show();
 		g.dispose();

@@ -1,3 +1,5 @@
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.ArrayList;
@@ -6,13 +8,16 @@ import java.util.HashMap;
 public class EntityManager {
 
 	private Handler handler;
-	private Player1 player;
-	private Player1 player2;
+	private Player player;
+	private Player player2;
 	private ArrayList<Entity> entities;
     private HashMap<String, AudioPlayer> sfx;
+    private boolean collision;
+    private int width = 40, height = 40;
+
 	
 	//public EntityManager(Handler handler, Player1 player, Player2 player2) {
-	public EntityManager(Handler handler, Player1 player, Player1 player2) {
+	public EntityManager(Handler handler, Player player, Player player2) {
 		this.handler = handler;
 		this.player = player;
 		this.player2 = player2;
@@ -27,30 +32,28 @@ public class EntityManager {
 		sfx = new HashMap<String, AudioPlayer>();
 		sfx.put("Grass", new AudioPlayer("./media/sounds/side_crash.wav"));
 		sfx.put("Car", new AudioPlayer("./media/sounds/crash.wav"));
+		
 	}
 	
 	public void playerCollisions() {
-		
-			float playerX = entities.get(0).getX();
-			float playerY = entities.get(0).getY();
-			int playerWidth = entities.get(0).getWidth();
-			int playerHeight = entities.get(0).getHeight();
-			
-			Rectangle playerHitbox = new Rectangle((int)playerX + 5, (int)playerY + 5, playerWidth, playerHeight);
-			
-			float player2X = entities.get(1).getX();
-			float player2Y = entities.get(1).getY();
-			int player2Width = entities.get(1).getWidth();
-			int player2Height = entities.get(1).getHeight();
-			
-			// Players collide with each other
-			if(playerHitbox.intersects(player2X + 5, player2Y + 5, player2Width, player2Height)) {
-				System.out.println("Player collision");
-				sfx.get("Car").play();
-				//System.exit(0); //end game if players collide
-			}
 
+		//collision = false;
+		float playerX = entities.get(0).getX();
+		float playerY = entities.get(0).getY();
+		
+		Rectangle playerHitbox = new Rectangle((int)playerX + 5, (int)playerY + 5, width, height );
+		
+		float player2X = entities.get(1).getX();
+		float player2Y = entities.get(1).getY();
+		
+		// Players collide with each other
+		if(playerHitbox.intersects(player2X + 5, player2Y + 5, width, height)) {
+			System.out.println("Player collision");
+			sfx.get("Car").play();
+			collision = true;
 		}
+
+	}
 	
 	
 	public void tick() {
@@ -59,13 +62,25 @@ public class EntityManager {
 			e.tick();
 		}
 		
-		playerCollisions();
+		playerCollisions(); // End game if players collide
 	}
 	
 	public void render(Graphics g) {
 		for(Entity e : entities) {
 			e.render(g);
 		}
+		
+//		float player2X = entities.get(1).getX();
+//		float player2Y = entities.get(1).getY();
+//		
+//		g.setColor(Color.red);
+//		g.fillRect((int)player2X + 5, (int)player2Y + 5, 40, 40); // Hitbox
+//		
+//		float playerX = entities.get(0).getX();
+//		float playerY = entities.get(0).getY();
+//		
+//		g.setColor(Color.red);
+//		g.fillRect((int)playerX + 5, (int)playerY + 5, 40, 40 ); // Hitbox
 	}
 
 	public void addEntity(Entity e) {
@@ -80,19 +95,19 @@ public class EntityManager {
 		this.handler = handler;
 	}
 
-	public Player1 getPlayer() {
+	public Player getPlayer() {
 		return player;
 	}
 
-	public void setPlayer(Player1 player) {
+	public void setPlayer(Player player) {
 		this.player = player;
 	}
 
-	public Player1 getPlayer2() {
+	public Player getPlayer2() {
 		return player2;
 	}
 
-	public void setPlayer2(Player1 player2) {
+	public void setPlayer2(Player player2) {
 		this.player2 = player2;
 	}
 
@@ -103,5 +118,10 @@ public class EntityManager {
 	public void setEntities(ArrayList<Entity> entities) {
 		this.entities = entities;
 	}
+
+	public boolean isCollision() {
+		return collision;
+	}
+	
 	
 }

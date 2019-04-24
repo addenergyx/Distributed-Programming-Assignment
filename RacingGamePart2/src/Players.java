@@ -8,11 +8,12 @@ public abstract class Players extends Entity {
 	public static final int DEFAULT_PLAYER_WIDTH = 50;
 	public static final int DEFAULT_PLAYER_HEIGHT = 50;
 	
-	protected int health, laps;
+	protected int laps;
 	protected float speed;
 	protected float xMove, yMove;
 	boolean collision, passCheckpoint;
     private HashMap<String, AudioPlayer> sfx;
+    private Rectangle grass;
 
     public Players(Handler handler, float x, float y, int width, int height, BufferedImage[] car) {
 	//public Players(Handler handler, float x, float y, int width, int height) {
@@ -29,7 +30,8 @@ public abstract class Players extends Entity {
 		sfx = new HashMap<String, AudioPlayer>();
 		sfx.put("Grass", new AudioPlayer("./media/sounds/side_crash.wav"));
 		sfx.put("Car", new AudioPlayer("./media/sounds/crash.wav"));
-
+		
+		grass = new Rectangle(150, 200, 550, 300);
 	}
 
 	public void laps(){
@@ -46,20 +48,16 @@ public abstract class Players extends Entity {
 		}
 		
 		if (hitbox.intersects(finishline) && passCheckpoint) { 
-			System.out.println("Finished");
+			System.out.println("Winner");
 			laps++;
 			passCheckpoint = false;
 		}
 			
-		
 	}
-	
 	
 	// Comprehensive collision detection using a mix of mathematical and graphical collision
 	// Graphical alone didn't work when the kart collided if a boundary backwards
 	public void moveX() {
-		
-		Rectangle grass = new Rectangle(150, 200, 550, 300);
 		
 	    if (xMove > 0) { //moving right
 	    	// Contains checks whether or not this Rectangle entirely is contained the specified Rectangle.
@@ -70,7 +68,7 @@ public abstract class Players extends Entity {
 			} else {
 				collision = true;
 				sfx.get("Grass").play();
-				speed = (float) -1;
+				setSpeed(-1);
 
 			}
 		}else if (xMove < 0) { //moving left
@@ -81,17 +79,14 @@ public abstract class Players extends Entity {
 			}else {
 				collision = true;
 				sfx.get("Grass").play();
-				speed = (float) -1;
+				setSpeed(-1);
 
 			}
 		} 
 		
 	}
-
 	
 	public void moveY() {
-		
-		Rectangle grass = new Rectangle(150, 200, 550, 300);
 		
 		if (yMove < 0) { // Moving up
 						
@@ -101,7 +96,7 @@ public abstract class Players extends Entity {
 			}else {
 				collision = true;
 				sfx.get("Grass").play();
-				speed = (float) -1;
+				setSpeed(-1);
 
 			}
 			
@@ -113,7 +108,7 @@ public abstract class Players extends Entity {
 			}else {
 				collision = true;
 				sfx.get("Grass").play();
-				speed = (float) -1;
+				setSpeed(-1);
 			}
 		}
 	}
@@ -132,14 +127,6 @@ public abstract class Players extends Entity {
 
 	public void setyMove(float yMove) {
 		this.yMove = yMove;
-	}
-
-	public int getHealth() {
-		return health;
-	}
-
-	public void setHealth(int health) {
-		this.health = health;
 	}
 
 	public float getSpeed() {
