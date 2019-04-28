@@ -31,7 +31,7 @@ public class MusicPlayer implements Runnable {
 			clip = (Clip) AudioSystem.getLine(info);
 			clip.open(ais);
 			FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-			gainControl.setValue(-20); //lower volume
+			gainControl.setValue(-10); //lower volume
 			
 			clip.start();
 			

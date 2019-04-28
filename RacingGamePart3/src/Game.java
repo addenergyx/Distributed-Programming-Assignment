@@ -3,16 +3,17 @@ import java.awt.geom.Area;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
 public class Game implements Runnable{
 	
-	private Track track;
+	public Track track; // Public because need frame for window listener
 	public int width, height;
 	public String title;
 	
-	private boolean running = false; // When players collide running should become false, end game
+	private boolean running = false; // When players collide running should become false
 	private Thread thread;
 	
 	private BufferStrategy bs;
@@ -21,55 +22,71 @@ public class Game implements Runnable{
 	//States
 	private State gameState;
 	private State menuState;
-	
+		
 	//Input
 	private KeyManager keyManager;
+	public EntityManager entityManager;
+	public WindowHandler windowHandler;
 	
 	//Handler
-	private Handler handler;
+	public Handler handler;
 	
-	//private EntityManager entityManager;
+	public Player player;
 	
-	private GameClient socketClient;
-	private GameServer socketServer;
+	public GameClient socketClient;
+	public GameServer socketServer;
 	
 	public Game(String title, int width, int height) {
 		this.width = width;
 		this.height = height;
 		this.title = title;
-		//entityManager = new EntityManager(handler, new Player1(handler,700, 400));
 		keyManager = new KeyManager();
 	}
 	
-	private void init() {
+	public void init() {
+		
+		
 		track = new Track(title, width, height);
 		track.getFrame().addKeyListener(keyManager);
-		Assets.init(); //loads all images
+		//track.getFrame().addWindowListener(windowHandler);
+		Assets.init(); // Loads all images
+//		handler = new Handler(this);
+		windowHandler = new WindowHandler(this);
+
+		entityManager = new EntityManager();
 		
-		handler = new Handler(this);
+		player = new PlayerMP(this, 750, 350, JOptionPane.showInputDialog(this, "Username"), Assets.player1_move, "arrows" ,null, -1); // Original player
+
+		entityManager.addEntity(player);
+		
+		Packet00Login loginPacket = new Packet00Login(player.getUsername(), player.x, player.y);
+		
+		if (socketServer != null) {
+			socketServer.addConnection((PlayerMP)player, loginPacket);
+		}
 		
 		//socketClient.sendData("ping".getBytes());
-
-		//Initialises State of game
-		gameState = new GameState(handler); //Because already in game class just pass 'this'
-		menuState = new MenuState(handler);
-		
-		State.setState(gameState);
-		
-		Packet00Login loginPacket = new Packet00Login(JOptionPane.showInputDialog(this, "Username: "));
 		loginPacket.writeData(socketClient);
+		
+		// Initialises State of game
+//		gameState = new GameState(handler); 
+//		menuState = new MenuState(handler);
+//		State.setState(gameState);
+		
 	}
 	
 	private void tick() {
 		keyManager.tick();
-		if(State.getState() != null)
-			State.getState().tick();
+		entityManager.tick();
+		
+//		if(State.getState() != null)
+//			State.getState().tick();
 	}
 		
 	private void render() {
 		bs = track.getCanvas().getBufferStrategy(); // Using buffers to draw to screen
 		if(bs == null) {
-			track.getCanvas().createBufferStrategy(3);
+			track.getCanvas().createBufferStrategy(3); // Triple buffer is standard design
 			return;
 		}
 		
@@ -83,12 +100,12 @@ public class Game implements Runnable{
 		
 		Color c1 = Color.green;
 		g.setColor( c1 );
-		g.fillRect( 150, 200, 550, 300 ); //grass
+		g.fillRect( 150, 200, 550, 300 ); //Grass
 		
 		Color c2 = Color.black;
 		g.setColor( c2 );
-		g.drawRect(50, 100, 750, 500);  // outer edge
-		g.drawRect(150, 200, 550, 300); // inner edge
+		g.drawRect(50, 100, 750, 500);  // Outer edge
+		g.drawRect(150, 200, 550, 300); // Inner edge
 		
 		g2d.setColor(Color.yellow);
         Stroke dashed = new BasicStroke(3, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0);
@@ -97,27 +114,23 @@ public class Game implements Runnable{
 		
 		Color c4 = Color.white;
 		g.setColor( c4 );
-		g.drawLine( 700, 350, 800, 350 ); // start line
+		g.drawLine( 700, 350, 800, 350 ); // Start line
 		
 		g.setColor(Color.red);
-		g.fillRect(50, 350, 100, 10 ); // checkpoint
+		g.fillRect(50, 350, 101, 10 ); // Checkpoint
 		
 		//Outer grass
-		Area outter = new Area(new Rectangle(0, 0, 850, 650 ));
+		Area outer = new Area(new Rectangle(0, 0, 850, 650 ));
 		Rectangle inner = new Rectangle(50, 100, 750, 500);
-		outter.subtract(new Area(inner));
+		outer.subtract(new Area(inner));
 		g2d.setColor(Color.green);
-		g2d.fill(outter);
+		g2d.fill(outer);
 		
-		//Calling order in java really matters!!! Must call player kart last
-		if(State.getState() != null)
-			State.getState().render(g);
+//		if(State.getState() != null)
+//			State.getState().render(g);
 		
-		//g.drawImage(testImage, 20,20, null);
-		//g.drawImage(sheet.crop(0, 0, 50, 50),5,5,null);
-		//g.drawImage(Assets.player1,10,10, null);
-		
-		//player1.render(g); //player1 kart
+		//player.render(g);
+		entityManager.render(g);
 		
 		bs.show();
 		g.dispose();
@@ -165,33 +178,28 @@ public class Game implements Runnable{
 	}
 
 	public synchronized void start() {
-		//if(running) // Prevents another thread starting
-		//	return;
+//		if(running) // Prevents another thread starting
+//			return;
 		running = true;
-		thread = new Thread(this);
-		thread.start();
 		
-//		if(JOptionPane.showInputDialog(this, "Running server?") == "0") {
-//			System.out.println("adsasd");
-//			socketServer = new GameServer(this);
-//			socketServer.start();
-//		}
-		
-		int reply = JOptionPane.showConfirmDialog(null, "Running server", "Server", JOptionPane.YES_NO_OPTION);
+		int reply = JOptionPane.showConfirmDialog(null, "Running server?", "Server", JOptionPane.YES_NO_OPTION);
 		//if(JOptionPane.showInputDialog(game, "Running server?").trim() == "yes") {
 		if (reply == JOptionPane.YES_OPTION) {
-			socketServer = new GameServer(handler);
+			socketServer = new GameServer(this);
 			socketServer.start();
-			System.out.println("server");
+			System.out.println("Server");
 		} 
 		
-		socketClient = new GameClient(handler, "localhost");
-		socketClient.start();
+		new Thread(this).start();
+		
+        socketClient = new GameClient(this, "127.0.0.1");
+        socketClient.start();
+       
 	}
 	
 	public synchronized void stop() {
-		if(!running) // Prevents trying to stop thread that is already stopped
-			return;
+//		if(!running) // Prevents trying to stop thread that is already stopped
+//			return;
 		running = false;
 		
 		try {
@@ -200,4 +208,5 @@ public class Game implements Runnable{
 			e.printStackTrace();
 		}
 	}
+
 }

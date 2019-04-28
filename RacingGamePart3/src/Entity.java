@@ -1,15 +1,16 @@
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.util.ArrayList;
 
 public abstract class Entity {
 	
-	protected Handler handler;
+	protected Game game;
 	protected float x,y; //float for smooth movement of kart
 	protected int width, height;
 	protected Rectangle bounds; //player boundary for collision detection
 	
-	public Entity(Handler handler, float x, float y, int width, int height) {
-		this.handler = handler;
+	public Entity(Game game, float x, float y, int width, int height) {
+		this.game = game;
 		this.x = x;
 		this.y = y;
 		this.width = width;
@@ -20,22 +21,6 @@ public abstract class Entity {
 	public abstract void tick();
 	
 	public abstract void render(Graphics g);
-	
-	// Players collide with each other
-//	public boolean checkEntityCollisions(float xOffset, float yOffset){
-//		for(Entity e : ){
-//			if(e.equals(this))
-//				continue;
-//			if(e.getCollisionBounds(0f, 0f).intersects(getCollisionBounds(xOffset, yOffset)))
-//				return true;
-//		}
-//		return false;
-//	}
-	
-	
-//	public Rectangle getCollisionBounds(float xOffset, float yOffset) {
-//		return new Rectangle((int) (x + bounds.x + xOffset), (int) (y + bounds.y + yOffset), bounds.width, bounds.height);
-//	}
 	
 	public float getX() {
 		return x;

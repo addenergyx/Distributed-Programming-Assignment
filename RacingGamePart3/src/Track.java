@@ -3,7 +3,7 @@ import java.awt.*;
 
 public class Track {
 
-	private JFrame frame;
+	public JFrame frame;
 	private Canvas canvas; //All graphics drawn to canvas
 	
 	private String title;
@@ -16,8 +16,6 @@ public class Track {
 		
 		createDisplay();
 	}
-	
-	
 
 	private void createDisplay() {
 		
