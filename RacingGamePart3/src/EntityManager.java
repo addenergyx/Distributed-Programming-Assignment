@@ -57,7 +57,7 @@ public class EntityManager {
 	
 	
 	public void tick() {
-		for (int i = 0; i < entities.size(); i++) {
+		for (int i = 0; i < entities.size(); i++) { //Using this loop instead of for "(Entity e : entities)" avoids error "java.util.ConcurrentModificationException"
 			Entity e = entities.get(i);
 			e.tick();
 		}
