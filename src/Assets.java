@@ -29,6 +29,10 @@ public class Assets {
 		
 		fire = KartLoader.loadImage("/fire/fire.png");
 		
+		// The reason for two classes for handling sound is there is a vital
+		// difference between how they should run.
+		// Music must run continuosly whereas sound effects should only play once
+		
 		// Car sound effects
 		sfx = new HashMap<String, AudioPlayer>();
 		sfx.put("Grass", new AudioPlayer("./media/sounds/side_crash.wav"));
