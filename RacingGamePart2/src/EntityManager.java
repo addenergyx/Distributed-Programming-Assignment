@@ -11,7 +11,6 @@ public class EntityManager {
 	private Player player;
 	private Player player2;
 	private ArrayList<Entity> entities;
-    private HashMap<String, AudioPlayer> sfx;
     private boolean collision;
     private int width = 40, height = 40;
 
@@ -23,15 +22,8 @@ public class EntityManager {
 		this.player2 = player2;
 		
 		entities = new ArrayList<Entity>(); // Array of players
-		//Player1 player2 = new Player1(handler, 750, 400);
-		//Player1 player = new Player1(handler, 750, 400, Assets.player1_move, "wasd");
-		//Player1 player2 = new Player1(handler, 750, 400, Assets.player1_move, "wasd");
 		addEntity(player);
 		addEntity(player2);
-		
-		sfx = new HashMap<String, AudioPlayer>();
-		sfx.put("Grass", new AudioPlayer("./media/sounds/side_crash.wav"));
-		sfx.put("Car", new AudioPlayer("./media/sounds/crash.wav"));
 		
 	}
 	
@@ -48,8 +40,8 @@ public class EntityManager {
 		
 		// Players collide with each other
 		if(playerHitbox.intersects(player2X + 5, player2Y + 5, width, height)) {
-			System.out.println("Player collision");
-			sfx.get("Car").play();
+			//System.out.println("Player collision");
+			Assets.sfx.get("Car").play();
 			collision = true;
 		}
 
@@ -82,6 +74,7 @@ public class EntityManager {
 //		g.setColor(Color.red);
 //		g.fillRect((int)playerX + 5, (int)playerY + 5, 40, 40 ); // Hitbox
 	}
+	
 
 	public void addEntity(Entity e) {
 		entities.add(e);

@@ -23,8 +23,6 @@ public class Player extends Players {
 		
 		controls = tempControls;
 		
-		//Animation
-		//rotation = new Animation(Assets.player1_move);
 		rotation = new Animation(car);
 	}
 	
@@ -51,6 +49,7 @@ public class Player extends Players {
 			if(handler.getKeyManager().up) {		
 				setSpeed(1); //increase speed each time arrow press
 				speed = xDelta;
+				Assets.sfx.get("Speed up").play();
 			}
 			if(handler.getKeyManager().down) {
 				setSpeed(-1); //decreases speed each time arrow press
@@ -67,6 +66,7 @@ public class Player extends Players {
 			if(handler.getKeyManager().up2) {		
 				setSpeed(1); 
 				speed = xDelta;
+				Assets.sfx.get("Speed up").play();
 			}
 			if(handler.getKeyManager().down2) {
 				setSpeed(-1); 

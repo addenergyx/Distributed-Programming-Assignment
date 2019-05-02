@@ -1,4 +1,5 @@
 import java.awt.image.BufferedImage;
+import java.util.HashMap;
 
 public class Assets {
 	
@@ -7,6 +8,9 @@ public class Assets {
 	//Array containing images for each angle of go-kart
 	public static BufferedImage[] player1_move; //BufferImage more efficient than imageicon 
 	public static BufferedImage[] player2_move;
+	public static BufferedImage fire;
+    public static HashMap<String, AudioPlayer> sfx;
+    public static HashMap<String, MusicPlayer> music;
 	
 	public static void init() {
 		SpriteSheet sheet = new SpriteSheet(KartLoader.loadImage("/player1gokart/spritesheet.png"));
@@ -23,5 +27,21 @@ public class Assets {
 			}
 		}
 		
+		fire = KartLoader.loadImage("/fire/fire.png");
+		
+		// The reason for two classes for handling sound is there is a vital
+		// difference between how they should run.
+		// Music must run continuosly whereas sound effects should only play once
+		
+		// Car sound effects
+		sfx = new HashMap<String, AudioPlayer>();
+		sfx.put("Grass", new AudioPlayer("./media/sounds/side_crash.wav"));
+		sfx.put("Car", new AudioPlayer("./media/sounds/crash.wav"));
+		sfx.put("Speed up", new AudioPlayer("./media/sounds/speedup.wav"));
+		
+		// Music
+		music = new HashMap<String, MusicPlayer>();
+		music.put("Menu", new MusicPlayer("Menu"));
+		music.put("Stadium", new MusicPlayer("Stadium"));
 	}
 }

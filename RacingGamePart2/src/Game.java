@@ -23,6 +23,7 @@ public class Game implements Runnable{
 		
 	//Input
 	private KeyManager keyManager;
+	private MouseManager mouseManager;
 	
 	//Handler
 	private Handler handler;
@@ -32,11 +33,17 @@ public class Game implements Runnable{
 		this.height = height;
 		this.title = title;
 		keyManager = new KeyManager();
+		mouseManager = new MouseManager();
 	}
 	
 	private void init() {
 		track = new Track(title, width, height);
 		track.getFrame().addKeyListener(keyManager);
+		
+		// Need both as sometimes frame isn't in focus
+		track.getFrame().addMouseListener(mouseManager);
+		track.getCanvas().addMouseListener(mouseManager);
+		
 		Assets.init(); // Loads all images
 		
 		handler = new Handler(this);
@@ -44,7 +51,9 @@ public class Game implements Runnable{
 		// Initialises State of game
 		gameState = new GameState(handler); 
 		menuState = new MenuState(handler);
-		State.setState(gameState);
+		
+		State.setState(menuState);
+		//State.setState(gameState);
 
 	}
 	
@@ -64,38 +73,9 @@ public class Game implements Runnable{
 		g = bs.getDrawGraphics();
 		Graphics2D g2d = (Graphics2D) g.create();
 		
-		// Clear to hide flashing track update
-		g.clearRect(0, 0, width, height);
+		g.clearRect(0, 0, width, height); // Clear to hide flashing track update
 		
-		g.fillRect(0, 0, width, height); // Track
-		
-		Color c1 = Color.green;
-		g.setColor( c1 );
-		g.fillRect( 150, 200, 550, 300 ); //Grass
-		
-		Color c2 = Color.black;
-		g.setColor( c2 );
-		g.drawRect(50, 100, 750, 500);  // Outer edge
-		g.drawRect(150, 200, 550, 300); // Inner edge
-		
-		g2d.setColor(Color.yellow);
-        Stroke dashed = new BasicStroke(3, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0);
-		g2d.setStroke(dashed);
-	    g2d.draw(new RoundRectangle2D.Double(100, 150, 650, 400, 10, 10));
-		
-		Color c4 = Color.white;
-		g.setColor( c4 );
-		g.drawLine( 700, 350, 800, 350 ); // Start line
-		
-		g.setColor(Color.red);
-		g.fillRect(50, 350, 101, 10 ); // Checkpoint
-		
-		//Outer grass
-		Area outer = new Area(new Rectangle(0, 0, 850, 650 ));
-		Rectangle inner = new Rectangle(50, 100, 750, 500);
-		outer.subtract(new Area(inner));
-		g2d.setColor(Color.green);
-		g2d.fill(outer);
+		g.fillRect(0, 0, handler.getGame().width, handler.getGame().height); // Track for game, background for menu
 		
 		if(State.getState() != null)
 			State.getState().render(g);
@@ -143,6 +123,10 @@ public class Game implements Runnable{
 	
 	public KeyManager getKeyManager() {
 		return keyManager;
+	}
+	
+	public MouseManager getMouseManager() {
+		return mouseManager;
 	}
 
 //	public synchronized void start() {

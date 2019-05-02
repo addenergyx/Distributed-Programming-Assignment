@@ -12,7 +12,6 @@ public abstract class Players extends Entity {
 	protected float speed;
 	protected float xMove, yMove;
 	boolean collision, passCheckpoint;
-    private HashMap<String, AudioPlayer> sfx;
     private Rectangle grass;
 
     public Players(Handler handler, float x, float y, int width, int height, BufferedImage[] car) {
@@ -25,11 +24,6 @@ public abstract class Players extends Entity {
 		// Velocity of the car (speed and direction)
 		xMove = 0;
 		yMove = 0;
-		
-		// Car sound effects
-		sfx = new HashMap<String, AudioPlayer>();
-		sfx.put("Grass", new AudioPlayer("./media/sounds/side_crash.wav"));
-		sfx.put("Car", new AudioPlayer("./media/sounds/crash.wav"));
 		
 		grass = new Rectangle(150, 200, 550, 300);
 	}
@@ -67,7 +61,7 @@ public abstract class Players extends Entity {
 				collision = false;
 			} else {
 				collision = true;
-				sfx.get("Grass").play();
+				Assets.sfx.get("Grass").play();
 				setSpeed(-1);
 
 			}
@@ -78,7 +72,7 @@ public abstract class Players extends Entity {
 				collision = false;
 			}else {
 				collision = true;
-				sfx.get("Grass").play();
+				Assets.sfx.get("Grass").play();
 				setSpeed(-1);
 
 			}
@@ -95,7 +89,7 @@ public abstract class Players extends Entity {
 				collision = false;
 			}else {
 				collision = true;
-				sfx.get("Grass").play();
+				Assets.sfx.get("Grass").play();
 				setSpeed(-1);
 
 			}
@@ -107,7 +101,7 @@ public abstract class Players extends Entity {
 				collision = false;
 			}else {
 				collision = true;
-				sfx.get("Grass").play();
+				Assets.sfx.get("Grass").play();
 				setSpeed(-1);
 			}
 		}

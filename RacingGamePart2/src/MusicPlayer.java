@@ -27,14 +27,13 @@ public class MusicPlayer implements Runnable {
 			AudioFormat format = ais.getFormat();
 			DataLine.Info info = new  DataLine.Info(Clip.class, format);
 			
-			
 			clip = (Clip) AudioSystem.getLine(info);
 			clip.open(ais);
 			FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-			gainControl.setValue(-10); //lower volume
+			gainControl.setValue(-10); // lower volume
+			clip.loop(Clip.LOOP_CONTINUOUSLY); // Loop forever
 			
 			clip.start();
-			
 			
 		} catch (Exception e) {
 			e.printStackTrace();
