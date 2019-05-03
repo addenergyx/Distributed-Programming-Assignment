@@ -1,7 +1,6 @@
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-//KeyListener accesses keyboard inputs
 public class KeyManager implements KeyListener {
 
 	private boolean[] keys;
@@ -18,7 +17,7 @@ public class KeyManager implements KeyListener {
 		left = keys[KeyEvent.VK_A];
 		right = keys[KeyEvent.VK_D];
 		
-		//PLAYER 2
+		// PLAYER 2
 		up2 = keys[KeyEvent.VK_UP];
 		down2 = keys[KeyEvent.VK_DOWN];
 		left2 = keys[KeyEvent.VK_LEFT];
@@ -29,7 +28,6 @@ public class KeyManager implements KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		keys[e.getKeyCode()] = true;
-		//System.out.println("pressed");
 	}
 
 	@Override

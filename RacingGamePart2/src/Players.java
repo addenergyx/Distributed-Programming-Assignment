@@ -15,7 +15,6 @@ public abstract class Players extends Entity {
     private Rectangle grass;
 
     public Players(Handler handler, float x, float y, int width, int height, BufferedImage[] car) {
-	//public Players(Handler handler, float x, float y, int width, int height) {
 		super(handler, x, y, width, height);
 		speed = DEFAULT_SPEED;
 		laps = 0;
@@ -53,7 +52,7 @@ public abstract class Players extends Entity {
 	// Graphical alone didn't work when the kart collided if a boundary backwards
 	public void moveX() {
 		
-	    if (xMove > 0) { //moving right
+	    if (xMove > 0) { // Moving right
 	    	// Contains checks whether or not this Rectangle entirely is contained the specified Rectangle.
 	    	// Intersect determines whether or not this Rectangle and the specified Rectangle intersect.
 			if (!grass.contains((int) (x + bounds.width), y + 5) && !grass.contains((x + bounds.width), bounds.height) && x - bounds.width < 710  ) {
@@ -65,7 +64,7 @@ public abstract class Players extends Entity {
 				setSpeed(-1);
 
 			}
-		}else if (xMove < 0) { //moving left
+		}else if (xMove < 0) { // Moving left
 						
 			if (!grass.contains(x + 5, y + 5) && !grass.contains(x + 5, bounds.height) && x > 50 ) {
 				x += xMove;
@@ -133,6 +132,7 @@ public abstract class Players extends Entity {
 	
 	public void direction(int currentImageIndex) {
 		
+		// Player movement based on current angle
 		if (currentImageIndex == 0 ) {
 			yMove = yMove - 2 * speed;
 		} else if (currentImageIndex == 1 ) {

@@ -33,13 +33,13 @@ public class MenuState extends State {
 			
 			String message = "A car can be controlled with 4 keys:" +
                     "\n" +
-                    "1. Accelerate (Key: up arrow / W): \n" +
-                    "2. Break (Key: down arrow / D)\n\n" +
+                    "1. Acceleration (Key: up arrow / W): \n" +
+                    "2. Brake (Key: down arrow / D)\n\n" +
                     "3. Turn left (Key: left arrow / A)\n" +
-                    "    - Turns the car’s 22.5 degrees counter-clockwise.\n" +
+                    "    - Turns the car 22.5 degrees counter-clockwise.\n" +
                     "\n" +
                     "4. Turn right (Key: right arrow / S)\n" +
-                    "    - Turns the car’s 22.5 degrees clockwise.\n"
+                    "    - Turns the car 22.5 degrees clockwise.\n"
                     + "\n"
                     + "Collision Rules\n"
                     + "\n"
@@ -55,7 +55,7 @@ public class MenuState extends State {
 			    });
 			t.start();
 
-			 handler.getMouseManager().help = false;
+			 handler.getMouseManager().help = false; // Reset help button press
 		}
 		
 	}
@@ -77,6 +77,9 @@ public class MenuState extends State {
 		g2d.draw(quitButton);
 		g.drawString("Quit", quitButton.x + 22, quitButton.y + 32);
 
+		// Both pieces of code below were initially unintended but gave 
+		// nice effects for the menu so decided to keep them
+		
 		// Moving car in menu
 		if (x <= 750) {
 			g.drawImage(Assets.player2_move[4], x, 420,null);

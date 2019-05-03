@@ -17,15 +17,15 @@ public class Game implements Runnable{
 	private BufferStrategy bs;
 	private Graphics g;
 	
-	//States
+	// States
 	private State gameState;
 	private State menuState;
 		
-	//Input
+	// Input
 	private KeyManager keyManager;
 	private MouseManager mouseManager;
 	
-	//Handler
+	// Handler
 	private Handler handler;
 	
 	public Game(String title, int width, int height) {

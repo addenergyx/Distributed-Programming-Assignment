@@ -31,7 +31,7 @@ public class Assets {
 		
 		// The reason for two classes for handling sound is there is a vital
 		// difference between how they should run.
-		// Music must run continuosly whereas sound effects should only play once
+		// Music must run continuously whereas sound effects should only play once per action
 		
 		// Car sound effects
 		sfx = new HashMap<String, AudioPlayer>();

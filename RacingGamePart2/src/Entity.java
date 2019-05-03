@@ -5,9 +5,9 @@ import java.util.ArrayList;
 public abstract class Entity {
 	
 	protected Handler handler;
-	protected float x,y; //float for smooth movement of kart
+	protected float x,y; // Float for smooth movement of kart
 	protected int width, height;
-	protected Rectangle bounds; //player boundary for collision detection
+	protected Rectangle bounds; // Player boundary for collision detection
 	
 	public Entity(Handler handler, float x, float y, int width, int height) {
 		this.handler = handler;
