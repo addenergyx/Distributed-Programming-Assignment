@@ -182,7 +182,7 @@ public class Game implements Runnable{
 //			return;
 		running = true;
 		
-		int reply = JOptionPane.showConfirmDialog(null, "Running server?", "Server", JOptionPane.YES_NO_OPTION);
+		int reply = JOptionPane.showConfirmDialog(null, "Run server?", "Server", JOptionPane.YES_NO_OPTION);
 		//if(JOptionPane.showInputDialog(game, "Running server?").trim() == "yes") {
 		if (reply == JOptionPane.YES_OPTION) {
 			socketServer = new GameServer(this);
