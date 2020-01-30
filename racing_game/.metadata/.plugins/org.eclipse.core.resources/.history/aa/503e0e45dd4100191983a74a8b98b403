@@ -1,0 +1,35 @@
+package racing_game;
+
+import javax.swing.JFrame;
+
+public class racing_game {
+	public static void main(String[] args) {
+	JFrame f = new JFrame();
+	//rotation r = new rotation();
+	TimerTest2 r = new TimerTest2();
+	f.add(r);
+	f.setVisible(true);
+	f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    f.setSize(400,400);
+    f.setLocation(200,200);
+	}
+}
+
+//import java.awt.*;
+//import javax.swing.*;
+//  
+//public class racing_game
+//{
+//    public static void main(String[] args)
+//    {
+//        String fileName = "greenKart0.jpg";
+//        ImageIcon icon = new ImageIcon(fileName);
+//        JLabel label = new JLabel(icon);
+//        JFrame f = new JFrame();
+//        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        f.getContentPane().add(new JScrollPane(label));
+//        f.setSize(400,400);
+//        f.setLocation(200,200);
+//        f.setVisible(true);
+//    }
+//}

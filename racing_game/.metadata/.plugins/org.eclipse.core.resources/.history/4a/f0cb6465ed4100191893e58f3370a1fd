@@ -1,0 +1,44 @@
+package racing_game;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class rotation extends JPanel implements ActionListener {
+	private Timer animator;
+	
+	//Array containing images for each angle of go-kart
+	private ImageIcon imageArray[];
+	
+	private int delay = 100, totalImages = 16, currentImage = 0;
+	
+		public rotation() {
+			imageArray = new ImageIcon[totalImages];
+			
+			for (int i=0; i < imageArray.length; i++) {
+				imageArray[i] = new ImageIcon("greenKart" + i + ".jpg");
+			}
+			
+			//Delay determines speed of rotation
+			animator = new Timer(delay, this);
+			animator.start();
+		}
+	
+		//Draws image to window
+		public void paintComponent(Graphics g) {
+			super.paintComponent(g);
+			
+			//When reaches end of animation (array) restart
+			if (currentImage >= imageArray.length) {
+				currentImage = 0;
+			}
+			currentImage++;
+			imageArray[currentImage].paintIcon(this, g, 0, 0);
+		}
+		
+		//
+		public void actionPerformed(ActionEvent e) {
+			repaint();
+		}
+		
+}
